@@ -29,14 +29,14 @@ class moondream:
 
 # %%
 class PlaywrightClient:
-    def __init__(self, starting_url, moondream: moondream, headless = True):
+    def __init__(self, starting_url, moondream: moondream, headless = False):
         self.link = starting_url
         # Start Playwright
         self._playwright = sync_playwright().start()
         # Launch Chromium (you can also use firefox or webkit)
-        self.browser = self._playwright.chromium.launch(headless=headless)
+        self.browser = self._playwright.chromium.launch(headless=headless, args=["--start-maximized"])
         # New browser context (isolated session)
-        self.context = self.browser.new_context()
+        self.context = self.browser.new_context(no_viewport=True)
         # New page
         self.page = self.context.new_page()
         self.mdinstance = moondream
@@ -65,8 +65,8 @@ class PlaywrightClient:
         """
         # self.page.mouse.move(coordinates[0], coordinates[1], steps=1)
         screen_width, screen_height = pyautogui.size()
-
-        self.page.mouse.click(screen_width * coordinates[0], screen_height * coordinates[1], button='left', click_count=1, delay=0)
+        pyautogui.click(x=screen_width * coordinates[0], y=screen_height * coordinates[1])
+        # self.page.mouse.click(screen_width * coordinates[0], screen_height * coordinates[1], button='left', click_count=1, delay=0)
     
         
 
