@@ -182,7 +182,9 @@ schemas = [
 # %%
 ts = TheoryStatus()
 moondreammodel = moondream(api_key="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXlfaWQiOiJhYmIyY2IwMC05MzdiLTQ2MzktODU3MC05MDdkZjBmZGRkMTIiLCJvcmdfaWQiOiJXUDdKU2VucmxzS3N6U1FPbWgwYUphVlRRSUIyVmNzZyIsImlhdCI6MTc0NTA4Njg3NCwidmVyIjoxfQ.P6L5CW0b8AaXjTbg9XgoVQVFyXkJiToXXujEoGoe34w")
-playwright = PlaywrightClient(starting_url="https://duckduckgo.com/", moondream=moondreammodel)
+starting_url = "https://duckduckgo.com/"
+# starting_url = "https://replit.com/"
+playwright = PlaywrightClient(starting_url=starting_url, moondream=moondreammodel)
 tools = [
     playwright.find_element,
     playwright.key_stroke,
@@ -206,6 +208,17 @@ message = """
 Theory: Find the "Set as Default Search" button. Click it. Verify that a window opens up.
 Start executing test using tools.
 """
+
+message = """
+Theory: Find the "Set as Default Search" button. Click it. Then click the "Got it" button.
+Verify that there is a search bar.
+Start executing test using tools
+"""
+
+# message = """
+# Theory: Click the pricing button
+# Start executing test using tools.
+# """
 
 # %%
 agent.reset()
