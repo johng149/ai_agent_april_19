@@ -51,7 +51,7 @@ class PlaywrightClient:
     #     # import pyautogui
     #     # pyautogui.moveTo(x, y)
 
-    def click(self, coordinates: tuple[int, int]) -> bool:
+    def click(self, coordinates: tuple[float, float]) -> bool:
         """
         Clicking on a web page, after clicking, will automatically wait for all
         elements to load.
@@ -128,7 +128,7 @@ schemas = [
             "properties": {
                 "coordinates": {
                     "type": "array",
-                    "items": {"type": "integer"},
+                    "items": {"type": "number"},
                     "description": "A tuple containing the x and y coordinates to click.",
                 }
             },
@@ -183,8 +183,9 @@ agent = GeminiAgent(tools, schemas, key)
 
 # %%
 message = """
-Theory: Can find "I'm feeling lucky" button and click it. After clicking it,
-the page should show search results
+Theory: Can find "I'm feeling lucky" button and click it. After clicking it, the
+page should show the search results, and the "I'm feeling lucky" button should be
+not present anymore.
 Start executing test using tools.
 """
 
