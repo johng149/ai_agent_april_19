@@ -65,10 +65,12 @@ class PlaywrightClient:
         """
         # self.page.mouse.move(coordinates[0], coordinates[1], steps=1)
         screen_width, screen_height = pyautogui.size()
-        pyautogui.click(x=screen_width * coordinates[0], y=screen_height * coordinates[1])
+        pyautogui.click(x=screen_width * coordinates[0], y=screen_height * coordinates[1] + 10)
         # self.page.mouse.click(screen_width * coordinates[0], screen_height * coordinates[1], button='left', click_count=1, delay=0)
     
-        
+    def key_stroke(self, input) -> bool:
+        self.page.keyboard.type(input)
+        return True
 
     def describe(self) -> str:
         """
@@ -124,6 +126,20 @@ schemas = [
         },
     },
     {
+        "name": "key_stroke",
+        "description": "Inputs given string as keystrokes",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "input": {
+                    "type": "string",
+                    "description": "The string to input"
+                }
+            },
+            "required": ["input"]
+        }
+    },
+    {
         "name": "click",
         "description": "Clicking on a web page, after clicking, will automatically wait for all elements to load.",
         "parameters": {
@@ -166,9 +182,10 @@ schemas = [
 # %%
 ts = TheoryStatus()
 moondreammodel = moondream(api_key="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXlfaWQiOiJhYmIyY2IwMC05MzdiLTQ2MzktODU3MC05MDdkZjBmZGRkMTIiLCJvcmdfaWQiOiJXUDdKU2VucmxzS3N6U1FPbWgwYUphVlRRSUIyVmNzZyIsImlhdCI6MTc0NTA4Njg3NCwidmVyIjoxfQ.P6L5CW0b8AaXjTbg9XgoVQVFyXkJiToXXujEoGoe34w")
-playwright = PlaywrightClient(starting_url="https://www.google.com", moondream=moondreammodel)
+playwright = PlaywrightClient(starting_url="https://duckduckgo.com/", moondream=moondreammodel)
 tools = [
     playwright.find_element,
+    playwright.key_stroke,
     playwright.click,
     playwright.describe,
     ts.theory_status,
@@ -186,9 +203,7 @@ agent = GeminiAgent(tools, schemas, key)
 
 # %%
 message = """
-Theory: Can find "I'm feeling lucky" button and click it. After clicking it, the
-page should show the search results, and the "I'm feeling lucky" button should be
-not present anymore.
+Theory: Find the "Set as Default Search" button. Click it. Verify that a window opens up.
 Start executing test using tools.
 """
 
