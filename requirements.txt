@@ -1,0 +1,12 @@
+torch
+transformers
+Pillow
+ipykernel
+playwright
+pyvips-binary 
+pyvips
+einops
+accelerate
+optimum
+bitsandbytes
+auto-gptq
