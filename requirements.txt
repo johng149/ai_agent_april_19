@@ -10,3 +10,4 @@ accelerate
 optimum
 bitsandbytes
 auto-gptq
+google-genai
