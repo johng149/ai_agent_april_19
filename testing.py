@@ -5,6 +5,7 @@ import time
 import moondream as md
 from PIL import Image
 from io import BytesIO
+import pyautogui
 
 # %%
 class moondream:
@@ -63,7 +64,9 @@ class PlaywrightClient:
              A boolean indicating whether the click was successful.
         """
         # self.page.mouse.move(coordinates[0], coordinates[1], steps=1)
-        self.page.mouse.click(coordinates[0], coordinates[1], button='left', click_count=1, delay=0)
+        screen_width, screen_height = pyautogui.size()
+
+        self.page.mouse.click(screen_width * coordinates[0], screen_height * coordinates[1], button='left', click_count=1, delay=0)
     
         
 
